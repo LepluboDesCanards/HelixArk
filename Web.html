@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELIXARK | Stockage ADN Écologique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0E6B5E;
+            --secondary: #4A90E2;
+            --accent: #FF7E5F;
+            --dark: #202020;
+            --light: #A7E8BD;
+            --text: rgba(255, 255, 255, 0.9);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        /* Fond texturé ADN */
+        .bg-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                linear-gradient(rgba(14, 107, 94, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 107, 94, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(14, 107, 94, 0.2);
+        }
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.8rem;
+            color: var(--light);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: linear-gradient(135deg, var(--dark) 0%, rgba(14, 107, 94, 0.3) 100%);
+            position: relative;
+        }
+        .hero img {
+            size: 100%;
+            padding-left: 10em;
+        }
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 3.5rem;
+            margin: 0 0 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(90deg, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.2);
+        }
+        .cta-button:hover {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 107, 94, 0.3);
+        }
+        /* Sections */
+        .section {
+            padding: 5rem 5%;
+            border-top: 1px solid rgba(14, 107, 94, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .section:nth-child(odd) { animation-delay: 0.2s; }
+        .section:nth-child(even) { animation-delay: 0.4s; }
+        .section-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--light);
+            text-align: center;
+        }
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .text-content {
+            background: rgba(18, 18, 18, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+        }
+        .illustration {
+            text-align: center;
+        }
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            filter: drop-shadow(0 0 10px rgba(14, 107, 94, 0.3));
+        }
+        /* Feature Cards */
+        .feature-card {
+            background: rgba(14, 107, 94, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 1.5rem;
+        }
+        .stat-number {
+            font-family: 'Manrope', sans-serif;
+            font-size: 3rem;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        /* Footer */
+        footer {
+            background: rgba(14, 107, 94, 0.1);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(14, 107, 94, 0.2);
+        }
+        .footer-logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+        .footer-text {
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-content {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-texture"></div>
+    <header>
+        <div class="logo">HELIXARK</div>
+        <nav>
+            <ul>
+                <li><a href="#pourquoi">Pourquoi ?</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#technologie">Technologie</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Le futur du stockage est encodé dans la vie.</h1>
+            <p>
+                Découvrez la première solution de stockage numérique sur ADN,
+                <strong>ultra-compacte, écologique et révolutionnaire</strong>.
+                Parce que les data centers d’hier ne répondent plus aux enjeux de demain.
+            </p>
+            <a href="#solution" class="cta-button">Explorer la technologie</a>
+        </div>
+        <div class="illustration">
+            <img src="./img1.png" alt="notre logo">
+        </div>
+    </section>
+    <section class="section" id="pourquoi">
+        <h2 class="section-title">POURQUOI L'ADN ?</h2>
+        <div class="section-content">
+            <div class="text-content">
+                <p>
+                    Les data centers actuels sont des <span style="color: var(--accent);">monstres énergétiques</span> :
+                    ils consomment <strong>1% de l’électricité mondiale</strong>, nécessitent un refroidissement constant,
+                    et occupent des espaces colossaux au détriment des écosystèmes.
+                </p>
+                <p>
+                    Chez <strong>HELIXARK</strong>, nous croyons que la réponse se cache dans la nature elle-même.
+                    L’ADN, molécule de la vie, est aussi le <span style="color: var(--accent);">support de stockage le plus dense et durable</span>
+                    jamais découvert.
+                </p>
+            </div>
+            <div class="illustration">
+                <img src="./chercheuse.jpg" alt="Comparaison data center vs ADN">
+                <p><em>Notre responsable R&D avec notre premier prototype de stockage sur ADN</em></p>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="solution">
+        <h2 class="section-title">NOTRE SOLUTION</h2>
+        <div class="section-content">
+            <div class="illustration">
+                <img src="adn.jpg" alt="Molécule ADN stockant des données">
+            </div>
+            <div class="text-content">
+                <p>
+                    Un brin d’ADN mesure <strong>2 nanomètres</strong> et peut stocker l’équivalent de <strong>50 octets</strong>.
+                    Mais sur <strong>1 cm²</strong>, nos dispositifs stockent jusqu’à <strong>2,5 pétaoctets</strong>
+                    — soit <span style="color: var(--accent);">l’équivalent de 500 millions de chansons</span>.
+                </p>
+                <p>
+                    Sans chaleur, sans gaspillage d’espace, et avec une durée de vie <strong>millénaire</strong>.
+                    Parce que l’ADN se conserve naturellement pendant des milliers d’années.
+                </p>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="stat1">2.5</div>
+                <div class="stat-label">Pétaoctets/cm²</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="stat2">0</div>
+                <div class="stat-label">Refroidissement nécessaire</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="stat3">10000</div>
+                <div class="stat-label">Ans de durée de vie</div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="technologie">
+        <h2 class="section-title">UNE TECHNOLOGIE RÉVOLUTIONNAIRE</h2>
+        <div class="feature-card">
+            <h3>⚡ Ultra-compact</h3>
+            <p>Remplacez des hectares de serveurs par quelques millimètres carrés d’ADN synthétique.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🌱 100% écologique</h3>
+            <p>Aucune émission de CO₂, aucun gaspillage d’eau pour le refroidissement.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔒 Sécurisé</h3>
+            <p>L’ADN est inviolable : vos données sont cryptées au niveau moléculaire.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⏳ Pérenne</h3>
+            <p>Contrairement aux disques durs, l’ADN se conserve pendant des millénaires.</p>
+        </div>
+    </section>
+    <section class="section" id="promesse">
+        <h2 class="section-title">NOTRE PROMESSE</h2>
+        <div class="text-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p>
+                Chez <strong>HELIXARK</strong>, nous ne vendons pas juste une technologie.
+                Nous proposons <span style="color: var(--accent);">une nouvelle façon de coexister avec notre planète</span>.
+            </p>
+            <p>
+                Imaginez un monde où le stockage de données <strong>régénère la Terre</strong> au lieu de la détruire.
+                Où chaque octet sauvegardé est un pas vers un futur durable.
+            </p>
+            <p style="font-family: 'Manrope', sans-serif; font-size: 1.5rem; margin-top: 2rem;">
+                <strong>LE STOCKAGE DE DEMAIN, AUJOURD’HUI.</strong>
+            </p>
+        </div>
+    </section>
+    <footer id="contact">
+        <div class="footer-logo">HELIXARK</div>
+        <div class="footer-text">
+            <p>Rejoignez la révolution du stockage écologique. Contactez-nous pour en savoir plus.</p>
+        </div>
+        <div class="social-links">
+            <a href="#">📧</a>
+            <a href="#">💼</a>
+            <a href="#">🐦</a>
+            <a href="#">🌐</a>
+        </div>
+        <p style="color: rgba(255, 255, 255, 0.5); margin-top: 2rem; font-size: 0.9rem;">
+            © 2025 HELIXARK. Tous droits réservés. | Technologie brevetée.
+        </p>
+    </footer>
+    <script>
+        // Animation des stats
+        const stats = [
+            { element: document.getElementById('stat1'), target: 2.5, speed: 100 },
+            { element: document.getElementById('stat2'), target: 0, speed: 100 },
+            { element: document.getElementById('stat3'), target: 10000, speed: 50 }
+        ];
+        function animateStats() {
+            stats.forEach(stat => {
+                let count = 0;
+                const interval = setInterval(() => {
+                    if (count >= stat.target) {
+                        clearInterval(interval);
+                    } else {
+                        count += stat.target / stat.speed;
+                        stat.element.textContent = count.toFixed(count % 1 !== 0 ? 1 : 0);
+                    }
+                }, 20);
+            });
+        }
+        // Déclencher l'animation quand la section est visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(document.querySelector('.stats'));
+        // Animation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            const hero = document.querySelector('.hero');
+            hero.style.opacity = 0;
+            hero.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                hero.style.transition = 'all 1s ease';
+                hero.style.opacity = 1;
+                hero.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
